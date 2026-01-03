@@ -1,0 +1,745 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   1. BASE STYLES & RESET
+   ========================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  -webkit-user-drag: none;
+}
+
+img {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ==========================================================================
+   2. CSS VARIABLES - THEMES
+   ========================================================================== */
+
+:root {
+  --font-head: 'Space Grotesk', 'Segoe UI', sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* Dark theme (default) */
+:root,
+:root[data-theme='dark'] {
+  --bg-dark: #050b14;
+  --glass: rgba(255, 255, 255, 0.03);
+  --glass-hover: rgba(255, 255, 255, 0.1);
+  --border: rgba(255, 255, 255, 0.1);
+  --border-hover: rgba(255, 255, 255, 0.3);
+  --neon-blue: #00f2ff;
+  --neon-purple: #bd00ff;
+  --neon-pink: #ff0055;
+  --neon-orange: #ff9e00;
+  --neon-green: #10b981;
+  --gamepad-focus: #fbbf24;
+  --text-main: #ffffff;
+  --text-muted: #94a3b8;
+}
+
+/* Light theme */
+:root[data-theme='light'] {
+  --bg-dark: #f1f5f9;
+  --glass: rgba(255, 255, 255, 0.8);
+  --glass-hover: rgba(255, 255, 255, 0.95);
+  --border: rgba(0, 0, 0, 0.08);
+  --border-hover: rgba(0, 0, 0, 0.2);
+  --neon-blue: #38bdf8;
+  --neon-purple: #c084fc;
+  --neon-pink: #f472b6;
+  --neon-orange: #fbbf24;
+  --neon-green: #34d399;
+  --gamepad-focus: #f59e0b;
+  --text-main: #0f172a;
+  --text-muted: #334155;
+}
+
+/* ==========================================================================
+   3. BODY & ROOT STYLES
+   ========================================================================== */
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-dark);
+  color: var(--text-main);
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+html.maximized #root {
+  border-radius: 0;
+}
+
+/* ==========================================================================
+   4. GLASSMORPHISM COMPONENTS
+   ========================================================================== */
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+}
+
+.notification-toast {
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 24px;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.glass-card:hover {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+.glass-button {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 12px;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  cursor: pointer;
+  user-select: none;
+}
+
+.glass-button:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: white;
+  transform: translateY(-2px);
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.3),
+    0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+.glass-button:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   5. LIQUID GLASS MODE (macOS 26+)
+   ========================================================================== */
+
+body.liquid-glass-enabled {
+  background: transparent !important;
+}
+
+body.liquid-glass-enabled #root,
+body.liquid-glass-enabled #root > div {
+  background: transparent !important;
+}
+
+/* Keep AppLoader opaque in liquid glass mode */
+body.liquid-glass-enabled #root > .app-loader {
+  background: #0a0a0f !important;
+}
+
+body.liquid-glass-enabled .glass-panel,
+body.liquid-glass-enabled .glass-card,
+body.liquid-glass-enabled .glass-button,
+body.liquid-glass-enabled [class*='backdrop-blur'] {
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .bg-glass,
+body.liquid-glass-enabled [class*='bg-glass']:not([class*='hover']) {
+  background: rgba(255, 255, 255, 0.02) !important;
+}
+
+body.liquid-glass-enabled .bg-bg-dark,
+body.liquid-glass-enabled [class*='bg-bg-dark'] {
+  background: transparent !important;
+}
+
+body.liquid-glass-enabled .glass-panel {
+  background: rgba(255, 255, 255, 0.03) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.liquid-glass-enabled .glass-card {
+  background: rgba(255, 255, 255, 0.04) !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+body.liquid-glass-enabled .modal-backdrop {
+  background: rgba(0, 0, 0, 0.6) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .modal-content {
+  background: rgba(10, 15, 25, 0.97) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .modal-content .bg-glass {
+  background: rgba(255, 255, 255, 0.06) !important;
+}
+
+body.liquid-glass-enabled .modal-content .bg-bg-dark {
+  background: rgba(10, 15, 25, 0.98) !important;
+}
+
+body.liquid-glass-enabled .modal-content .bg-black\/50 {
+  background: rgba(0, 0, 0, 0.7) !important;
+}
+
+body.liquid-glass-enabled .notification-toast {
+  background: rgba(10, 15, 25, 0.95) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .filter-dropdown {
+  background: rgba(10, 15, 25, 0.95) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .glass-input {
+  background: rgba(255, 255, 255, 0.05) !important;
+  backdrop-filter: none !important;
+  -webkit-backdrop-filter: none !important;
+}
+
+body.liquid-glass-enabled .glass-input:focus {
+  background: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Light theme + Liquid Glass */
+:root[data-theme='light'] body.liquid-glass-enabled {
+  background: transparent !important;
+}
+
+/* Light theme + liquid glass: dark text for readability */
+:root[data-theme='light'] body.liquid-glass-enabled .text-text-main,
+:root[data-theme='light'] body.liquid-glass-enabled [class*='text-text-main'] {
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .text-text-muted,
+:root[data-theme='light'] body.liquid-glass-enabled [class*='text-text-muted'] {
+  color: rgba(0, 0, 0, 0.65) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled #root,
+:root[data-theme='light'] body.liquid-glass-enabled #root > div {
+  background: transparent !important;
+}
+
+/* Keep AppLoader opaque in light theme + liquid glass mode */
+:root[data-theme='light'] body.liquid-glass-enabled #root > .app-loader {
+  background: #0a0a0f !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-panel,
+:root[data-theme='light'] body.liquid-glass-enabled .glass-card {
+  background: rgba(255, 255, 255, 0.85) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-card:hover {
+  background: rgba(255, 255, 255, 0.92) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .bg-glass,
+:root[data-theme='light'] body.liquid-glass-enabled [class*='bg-glass']:not([class*='hover']) {
+  background: rgba(255, 255, 255, 0.15) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .bg-glass-hover,
+:root[data-theme='light'] body.liquid-glass-enabled .hover\:bg-glass-hover:hover {
+  background: rgba(255, 255, 255, 0.25) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .bg-bg-dark,
+:root[data-theme='light'] body.liquid-glass-enabled [class*='bg-bg-dark'] {
+  background: transparent !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .modal-backdrop {
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Light theme + liquid glass: light backgrounds with dark text */
+:root[data-theme='light'] body.liquid-glass-enabled .modal-content {
+  background: rgba(255, 255, 255, 0.97) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .modal-content .bg-glass {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .modal-content .bg-bg-dark {
+  background: rgba(255, 255, 255, 0.98) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .modal-content .bg-black\/50 {
+  background: rgba(0, 0, 0, 0.5) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .notification-toast {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .filter-dropdown,
+:root[data-theme='light'] body.liquid-glass-enabled .filter-dropdown.bg-bg-dark {
+  background: rgba(255, 255, 255, 0.98) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+/* Version text in title bar - needs to be visible on transparent background */
+:root[data-theme='light'] body.liquid-glass-enabled .drag-region .text-text-muted\/70 {
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .filter-dropdown * {
+  color: rgba(0, 0, 0, 0.9);
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .filter-dropdown input {
+  background: rgba(0, 0, 0, 0.05) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .filter-dropdown input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-input {
+  background: rgba(255, 255, 255, 0.5) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+  color: rgba(0, 0, 0, 0.9) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-input::placeholder {
+  color: rgba(0, 0, 0, 0.4) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-input:focus {
+  background: rgba(255, 255, 255, 0.7) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-button {
+  background: rgba(255, 255, 255, 0.3) !important;
+  border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+:root[data-theme='light'] body.liquid-glass-enabled .glass-button:hover {
+  background: rgba(255, 255, 255, 0.5) !important;
+}
+
+/* ==========================================================================
+   6. LIGHT THEME OVERRIDES
+   ========================================================================== */
+
+:root[data-theme='light'] .glass-card {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.08),
+    0 1px 2px rgba(0, 0, 0, 0.04);
+}
+
+:root[data-theme='light'] .glass-card:hover {
+  background: rgba(255, 255, 255, 1);
+  border-color: rgba(0, 0, 0, 0.15);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.12),
+    0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme='light'] .glass-panel {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='light'] .glass-button {
+  background: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  color: var(--text-main);
+}
+
+:root[data-theme='light'] .glass-button:hover {
+  background: rgba(0, 0, 0, 0.1);
+  border-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='light'] .progress-track {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='light'] .bg-glass-hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='light'] .bg-white\/10 {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+:root[data-theme='light'] .bg-black\/60 {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+:root[data-theme='light'] .bg-\[rgba\(10\2c 20\2c 30\2c 0\.95\)\] {
+  background: rgba(255, 255, 255, 0.98);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='light'] .filter-dropdown {
+  background: rgba(255, 255, 255, 0.98);
+  border-color: rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme='light'] .filter-dropdown button {
+  color: var(--text-muted);
+}
+
+:root[data-theme='light'] .filter-dropdown button:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--text-main);
+}
+
+:root[data-theme='light'] .filter-dropdown button.bg-glass-hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--text-main);
+}
+
+:root[data-theme='light'] .filter-dropdown .bg-neon-blue svg {
+  color: white;
+  stroke: white;
+}
+
+:root[data-theme='light'] .hover\:bg-glass-hover:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='light'] .titlebar-btn:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: var(--text-main);
+}
+
+:root[data-theme='light'] .titlebar-close-btn:hover {
+  color: white;
+}
+
+:root[data-theme='light'] ::selection {
+  background: rgba(14, 165, 233, 0.25);
+  color: var(--text-main);
+}
+
+/* Notification items in light theme */
+:root[data-theme='light'] .notification-item {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+:root[data-theme='light'] .notification-item:hover {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+:root[data-theme='light'] .notification-item-unread {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.3);
+}
+
+:root[data-theme='light'] .notification-item-unread:hover {
+  background: rgba(56, 189, 248, 0.12);
+}
+
+/* Credits section - light theme */
+:root[data-theme='light'] .credits-section {
+  background: linear-gradient(to right, rgba(236, 72, 153, 0.15), rgba(168, 85, 247, 0.15));
+  border-color: rgba(168, 85, 247, 0.4);
+}
+
+:root[data-theme='light'] .credits-section .text-pink-500 {
+  color: #db2777;
+}
+
+:root[data-theme='light'] .credits-section .text-purple-400 {
+  color: #7c3aed;
+}
+
+:root[data-theme='light'] .credits-section .text-purple-300 {
+  color: #8b5cf6;
+}
+
+/* ==========================================================================
+   7. PROGRESS BARS
+   ========================================================================== */
+
+.progress-wrapper {
+  margin-bottom: 20px;
+}
+
+.progress-meta {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+}
+
+.progress-label {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.progress-value {
+  color: white;
+  font-weight: 700;
+}
+
+.progress-track {
+  height: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  position: relative;
+  animation: progressGlow 2s ease-in-out infinite;
+}
+
+/* ==========================================================================
+   8. SCROLLBARS
+   ========================================================================== */
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 8px rgba(0, 242, 255, 0.3);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, var(--neon-blue), var(--neon-pink));
+  box-shadow: 0 0 12px rgba(0, 242, 255, 0.5);
+}
+
+/* ==========================================================================
+   9. UTILITIES
+   ========================================================================== */
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.no-select {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.drag-region {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+}
+
+.no-animations,
+.no-animations * {
+  animation: none !important;
+  transition: none !important;
+}
+
+::selection {
+  background: rgba(0, 242, 255, 0.3);
+  color: white;
+}
+
+/* ==========================================================================
+   10. GAMEPAD FOCUS STYLES
+   ========================================================================== */
+
+[data-gamepad-mode] button:focus,
+[data-gamepad-mode] a:focus,
+[data-gamepad-mode] input:focus,
+[data-gamepad-mode] [tabindex]:focus,
+[data-gamepad-mode] [data-focusable='true']:focus,
+[data-gamepad-mode] button:focus-visible,
+[data-gamepad-mode] a:focus-visible,
+[data-gamepad-mode] input:focus-visible,
+[data-gamepad-mode] [tabindex]:focus-visible,
+[data-gamepad-mode] [data-focusable='true']:focus-visible {
+  outline: 3px solid var(--gamepad-focus) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(251, 191, 36, 0.3), 0 0 20px rgba(251, 191, 36, 0.4) !important;
+}
+
+[data-gamepad-mode] .game-list-item:focus,
+[data-gamepad-mode] .game-list-item:focus-visible {
+  outline: 3px solid var(--gamepad-focus) !important;
+  outline-offset: -2px;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5) !important;
+}
+
+[data-gamepad-mode] .filter-dropdown button:focus,
+[data-gamepad-mode] .filter-dropdown button:focus-visible,
+[data-gamepad-mode] .filter-dropdown button.gamepad-focus {
+  background: rgba(251, 191, 36, 0.2) !important;
+  outline: 3px solid var(--gamepad-focus) !important;
+  outline-offset: -2px;
+}
+
+[data-gamepad-mode] [data-gamepad-card]:focus,
+[data-gamepad-mode] [data-gamepad-card]:focus-visible {
+  outline: 3px solid var(--gamepad-focus) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 20px rgba(251, 191, 36, 0.5) !important;
+}
+
+:root[data-theme='light'] [data-gamepad-mode] button:focus,
+:root[data-theme='light'] [data-gamepad-mode] a:focus,
+:root[data-theme='light'] [data-gamepad-mode] input:focus,
+:root[data-theme='light'] [data-gamepad-mode] [tabindex]:focus,
+:root[data-theme='light'] [data-gamepad-mode] [data-focusable='true']:focus,
+:root[data-theme='light'] [data-gamepad-mode] button:focus-visible,
+:root[data-theme='light'] [data-gamepad-mode] a:focus-visible,
+:root[data-theme='light'] [data-gamepad-mode] input:focus-visible,
+:root[data-theme='light'] [data-gamepad-mode] [tabindex]:focus-visible,
+:root[data-theme='light'] [data-gamepad-mode] [data-focusable='true']:focus-visible {
+  outline: 3px solid var(--gamepad-focus) !important;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.4) !important;
+}
+
+:root[data-theme='light'] [data-gamepad-mode] .game-list-item:focus,
+:root[data-theme='light'] [data-gamepad-mode] .game-list-item:focus-visible {
+  outline: 3px solid var(--gamepad-focus) !important;
+  box-shadow: 0 0 20px rgba(245, 158, 11, 0.5) !important;
+}
+
+:root[data-theme='light'] [data-gamepad-mode] .filter-dropdown button:focus,
+:root[data-theme='light'] [data-gamepad-mode] .filter-dropdown button:focus-visible,
+:root[data-theme='light'] [data-gamepad-mode] .filter-dropdown button.gamepad-focus {
+  background: rgba(245, 158, 11, 0.15) !important;
+  outline: 3px solid var(--gamepad-focus) !important;
+}
+
+/* Gamepad selected state (visual selection without focus, for text inputs) */
+[data-gamepad-mode] [data-gamepad-selected] {
+  outline: 3px solid var(--gamepad-focus) !important;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 6px rgba(251, 191, 36, 0.3), 0 0 20px rgba(251, 191, 36, 0.4) !important;
+}
+
+:root[data-theme='light'] [data-gamepad-mode] [data-gamepad-selected] {
+  outline: 3px solid var(--gamepad-focus) !important;
+  box-shadow: 0 0 0 6px rgba(245, 158, 11, 0.3), 0 0 20px rgba(245, 158, 11, 0.4) !important;
+}
+
+/* ==========================================================================
+   11. LIGHT THEME - SIDEBAR & DROPDOWN BORDERS
+   ========================================================================== */
+
+:root[data-theme='light'] .bg-glass {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+:root[data-theme='light'] .border-border {
+  border-color: rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme='light'] .border-border-hover {
+  border-color: rgba(0, 0, 0, 0.25);
+}
+
+/* Dropdown trigger buttons in light theme */
+:root[data-theme='light'] button.bg-glass {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+}
+
+:root[data-theme='light'] button.bg-glass:hover {
+  background: rgba(255, 255, 255, 0.95);
+  border-color: rgba(0, 0, 0, 0.2);
+}
+
+:root[data-theme='light'] button.bg-glass-hover {
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+/* TitleBar version text in light theme */
+:root[data-theme='light'] .drag-region .text-text-muted\/70 {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+

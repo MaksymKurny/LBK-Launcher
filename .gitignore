@@ -1,0 +1,40 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+dist-electron/
+out/
+build/
+
+# Electron
+*.log
+
+# Environment
+.env
+.env.local
+
+# Apple certificates
+*.p8
+*.p12
+*.cer
+*.mobileprovision
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temp files
+*.tmp
+*.temp
+release/
+
+
+.claude/*

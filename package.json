@@ -1,0 +1,81 @@
+{
+  "name": "lbk-launcher",
+  "version": "0.1.0",
+  "description": "Інсталятор українізаторів відеоігор",
+  "author": {
+    "name": "LBK Team"
+  },
+  "license": "GPL-3.0-or-later",
+  "main": "out/main/index.js",
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "dev": "electron-vite dev",
+    "preview": "electron-vite preview",
+    "build": "electron-vite build",
+    "dist": "electron-builder --config electron-builder.config.cjs",
+    "dist:win": "electron-builder --win --config electron-builder.config.cjs",
+    "dist:linux": "electron-builder --linux --config electron-builder.config.cjs",
+    "dist:mac": "electron-builder --mac --config electron-builder.config.cjs",
+    "dist:win:local": "env-cmd pnpm build && pnpm dist:win",
+    "dist:linux:local": "env-cmd pnpm build && pnpm dist:linux",
+    "dist:mac:local": "env-cmd pnpm build && pnpm dist:mac",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint . --ext .ts,.tsx",
+    "find-unused": "knip",
+    "format": "prettier --write \"src/**/*.{ts,tsx,css}\"",
+    "types:generate": "npx --yes supabase gen types typescript --project-id qgylrzebvqayqswhewyz > src/lib/database.types.ts",
+    "postinstall": "electron-builder install-app-deps",
+    "generate:icns": "bash scripts/generate-icns.sh"
+  },
+  "dependencies": {
+    "7zip-bin-full": "^25.1.2",
+    "@node-steam/vdf": "^2.2.0",
+    "@supabase/supabase-js": "2.86.0",
+    "better-sqlite3": "^12.5.0",
+    "electron-updater": "6.6.2",
+    "framer-motion": "^12.23.25",
+    "got": "^11.8.6",
+    "lucide-react": "^0.294.0",
+    "node-7z": "^3.0.0",
+    "node-machine-id": "^1.1.12",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-lazy-load-image-component": "^1.6.3",
+    "react-snowfall": "^2.4.0",
+    "react-ts-gamepads": "^1.0.8",
+    "zustand": "^4.4.7"
+  },
+  "optionalDependencies": {
+    "electron-liquid-glass": "^1.1.1"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^20.10.5",
+    "@types/node-7z": "^2.1.11",
+    "@types/react": "^18.2.45",
+    "@types/react-dom": "^18.2.18",
+    "@types/react-lazy-load-image-component": "^1.6.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "@vitejs/plugin-react-swc": "^4.2.2",
+    "autoprefixer": "^10.4.16",
+    "electron": "39.2.4",
+    "electron-builder": "26.0.12",
+    "electron-devtools-installer": "^4.0.0",
+    "electron-vite": "4.0.1",
+    "env-cmd": "^11.0.0",
+    "eslint": "^8.56.0",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.4.24",
+    "eslint-plugin-unused-imports": "^4.3.0",
+    "knip": "^5.72.0",
+    "postcss": "^8.4.32",
+    "prettier": "^3.1.1",
+    "tailwindcss": "^3.4.0",
+    "typescript": "^5.3.3",
+    "vite": "^5.0.8",
+    "vite-plugin-node-polyfills": "^0.24.0"
+  }
+}
