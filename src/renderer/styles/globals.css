@@ -588,7 +588,7 @@ body.liquid-glass-enabled .glass-input:focus {
 }
 
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
+  width: 12px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -599,12 +599,15 @@ body.liquid-glass-enabled .glass-input:focus {
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: linear-gradient(180deg, var(--color-accent), var(--color-main));
   border-radius: 10px;
+  border: 3px solid transparent;
+  background-clip: content-box;
   transition: all 0.3s ease;
   box-shadow: 0 0 8px rgba(0, 242, 255, 0.3);
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: linear-gradient(180deg, var(--color-accent), var(--color-main));
+  background-color: linear-gradient(180deg, var(--color-accent), var(--color-main));
+  border: 2px solid transparent;
   box-shadow: 0 0 12px rgba(0, 242, 255, 0.5);
 }
 
