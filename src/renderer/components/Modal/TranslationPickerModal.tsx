@@ -95,9 +95,10 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                       w-full p-3 rounded-xl mb-1 last:mb-0 text-left transition-all
                       flex items-center gap-3 group
                       ${
+                        
                         isSelected
-                          ? 'bg-accent/20 ring-1 ring-accent'
-                          : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-accent/50'
+                            ? 'bg-accent/20 ring-1 ring-accent'
+                            : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-accent/50'
                       }
                     `}
                   >

@@ -397,14 +397,14 @@ export const MainContent: React.FC = () => {
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center ${isSpecialTranslator(selectedGame.team) ? 'bg-yellow-500/20' : 'bg-accent/20'}`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center ${isSpecialTranslator(selectedGame.team) ? 'bg-yellow-500/20' : 'bg-neon-blue/20'}`}
                 >
                   <Users
                     size={20}
                     className={
                       isSpecialTranslator(selectedGame.team)
                         ? 'text-yellow-400'
-                        : 'text-accent'
+                        : 'text-neon-blue'
                     }
                   />
                 </div>

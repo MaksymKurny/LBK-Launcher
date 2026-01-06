@@ -11,7 +11,7 @@ export const AppLoader = ({ status }: AppLoaderProps) => {
       case 'syncing':
         return 'Синхронізація';
       case 'error':
-        return 'Помилка з\'єднання';
+        return "Помилка з'єднання";
       case 'loading':
       default:
         return 'Завантаження';

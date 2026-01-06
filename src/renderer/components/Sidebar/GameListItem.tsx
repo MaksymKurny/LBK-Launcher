@@ -194,7 +194,7 @@ export const GameListItem: React.FC<GameListItemProps> = React.memo(
               </>
             ) : (
               <div
-                className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-2xl ${isAdultBlurred ? 'blur-lg' : ''}`}
+                className={`w-full h-full bg-gradient-to-br from-neon-purple to-neon-blue flex items-center justify-center text-white font-bold text-2xl ${isAdultBlurred ? 'blur-lg' : ''}`}
               >
                 {game.name.charAt(0)}
               </div>
@@ -275,7 +275,7 @@ export const GameListItem: React.FC<GameListItemProps> = React.memo(
               </>
             ) : (
               <div
-                className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-sm ${isAdultBlurred ? 'blur-md' : ''}`}
+                className={`w-full h-full bg-gradient-to-br from-neon-purple to-neon-blue flex items-center justify-center text-white font-bold text-sm ${isAdultBlurred ? 'blur-md' : ''}`}
               >
                 {game.name.charAt(0)}
               </div>

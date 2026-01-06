@@ -230,7 +230,10 @@ export function useGames({
 
         // Для спеціальних фільтрів (installed-games, installed-translations)
         // просто оновлюємо дані гри якщо вона вже в списку, не додаємо/видаляємо
-        if (specialFilter === 'installed-games' || specialFilter === 'installed-translations') {
+        if (
+          specialFilter === 'installed-games' ||
+          specialFilter === 'installed-translations'
+        ) {
           if (index !== -1) {
             // Гра є в списку - оновити дані
             const newGames = [...prevGames];
@@ -257,7 +260,8 @@ export function useGames({
           selectedAuthors?.some((author) => updatedGame.team?.includes(author));
 
         // Adult games are always shown in list (with blur overlay in UI)
-        const shouldBeInList = matchesSearch && matchesStatus && matchesAuthors && updatedGame.approved;
+        const shouldBeInList =
+          matchesSearch && matchesStatus && matchesAuthors && updatedGame.approved;
 
         if (index === -1) {
           // Гра не в списку
@@ -268,20 +272,19 @@ export function useGames({
           newGames.sort((a, b) => a.name.localeCompare(b.name));
           setTotal((prev) => prev + 1);
           return newGames;
-        } 
-          // Гра є в списку
-          if (!shouldBeInList) {
-            // Видалити гру, якщо вона більше не відповідає фільтрам
-            setTotal((prev) => prev - 1);
-            return prevGames.filter((g) => g.id !== updatedGame.id);
-          }
+        }
+        // Гра є в списку
+        if (!shouldBeInList) {
+          // Видалити гру, якщо вона більше не відповідає фільтрам
+          setTotal((prev) => prev - 1);
+          return prevGames.filter((g) => g.id !== updatedGame.id);
+        }
 
-          // Оновити гру і пересортувати (латиниця перед кирилицею, як в БД)
-          const newGames = [...prevGames];
-          newGames[index] = updatedGame;
-          newGames.sort((a, b) => a.name.localeCompare(b.name));
-          return newGames;
-        
+        // Оновити гру і пересортувати (латиниця перед кирилицею, як в БД)
+        const newGames = [...prevGames];
+        newGames[index] = updatedGame;
+        newGames.sort((a, b) => a.name.localeCompare(b.name));
+        return newGames;
       });
     };
 
@@ -347,11 +350,14 @@ export function useGames({
   }, [specialFilter, loadGames]);
 
   // Cleanup abort controller при unmount
-  useEffect(() => () => {
+  useEffect(
+    () => () => {
       if (abortControllerRef.current) {
         abortControllerRef.current.abort();
       }
-    }, []);
+    },
+    []
+  );
 
   return {
     games,
