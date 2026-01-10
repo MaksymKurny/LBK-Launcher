@@ -16,7 +16,7 @@ export const GlobalModal: React.FC = () => {
         return <XCircle size={48} className="text-red-400" />;
       case 'info':
       default:
-        return <Info size={48} className="text-neon-blue" />;
+        return <Info size={48} className="text-accent" />;
     }
   };
 
@@ -32,7 +32,7 @@ export const GlobalModal: React.FC = () => {
         <button
           onClick={closeModal}
           data-gamepad-confirm
-          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-white font-semibold hover:opacity-90 transition-opacity"
+          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-color-accent to-color-main text-text-dark font-semibold hover:opacity-90 transition-opacity"
         >
           Зрозуміло
         </button>

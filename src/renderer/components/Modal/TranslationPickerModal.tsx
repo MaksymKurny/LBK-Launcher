@@ -94,8 +94,8 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                       w-full p-3 rounded-xl mb-1 last:mb-0 text-left transition-all
                       flex items-center gap-3 group
                       ${isSelected
-                        ? 'bg-neon-blue/20 ring-1 ring-neon-blue'
-                        : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-neon-blue/50'
+                        ? 'bg-accent/20 ring-1 ring-accent'
+                        : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-accent/50'
                       }
                     `}
                   >
@@ -129,20 +129,20 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                           </span>
                         )}
                         {hasUpdate && (
-                          <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium bg-neon-blue/20 text-neon-blue rounded">
+                          <span className="flex-shrink-0 px-1.5 py-0.5 text-[10px] font-medium bg-accent/20 text-accent rounded">
                             Оновлення
                           </span>
                         )}
                       </div>
                       <div className="flex items-center gap-3 mt-1 text-xs text-text-muted">
-                        <span className={progress >= 100 ? 'text-green-400' : 'text-neon-blue'}>
+                        <span className={progress >= 100 ? 'text-green-400' : 'text-accent'}>
                           {progress}%
                         </span>
                         {game.version && <span>v{game.version}</span>}
                         {game.status && (
                           <span className={
                             game.status === 'completed' ? 'text-green-400' :
-                            game.status === 'in-progress' ? 'text-neon-blue' :
+                            game.status === 'in-progress' ? 'text-accent' :
                             ''
                           }>
                             {game.status === 'completed' ? 'Завершено' :
@@ -155,7 +155,7 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
 
                     {/* Selected indicator */}
                     {isSelected && (
-                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-neon-blue flex items-center justify-center">
+                      <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent flex items-center justify-center">
                         <Check size={14} className="text-white" />
                       </div>
                     )}

@@ -1,11 +1,23 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { MessageCircle, RefreshCw, FolderOpen, Trash2, Heart, Volume2, Play } from 'lucide-react';
+import {
+  MessageCircle,
+  RefreshCw,
+  FolderOpen,
+  Trash2,
+  Heart,
+  Volume2,
+  Play,
+} from 'lucide-react';
 import { Modal } from '../Modal/Modal';
 import { Switch } from '../ui/Switch';
 import { useSettingsStore } from '../../store/useSettingsStore';
 import { SPECIAL_TRANSLATORS } from '../../constants/specialTranslators';
 import { playNotificationSound } from '../../utils/notificationSounds';
-import { playNavigateSound, playConfirmSound, playBackSound } from '../../utils/gamepadSounds';
+import {
+  playNavigateSound,
+  playConfirmSound,
+  playBackSound,
+} from '../../utils/gamepadSounds';
 
 const SettingItem = React.memo<{
   id: string;
@@ -50,8 +62,12 @@ export const SettingsModal: React.FC = () => {
   const saveLogsToFile = useSettingsStore((state) => state.saveLogsToFile);
   const toggleSaveLogsToFile = useSettingsStore((state) => state.toggleSaveLogsToFile);
   // Sound settings
-  const notificationSoundsEnabled = useSettingsStore((state) => state.notificationSoundsEnabled);
-  const toggleNotificationSounds = useSettingsStore((state) => state.toggleNotificationSounds);
+  const notificationSoundsEnabled = useSettingsStore(
+    (state) => state.notificationSoundsEnabled
+  );
+  const toggleNotificationSounds = useSettingsStore(
+    (state) => state.toggleNotificationSounds
+  );
   const gamepadSoundsEnabled = useSettingsStore((state) => state.gamepadSoundsEnabled);
   const toggleGamepadSounds = useSettingsStore((state) => state.toggleGamepadSounds);
 
@@ -71,10 +87,6 @@ export const SettingsModal: React.FC = () => {
     // Apply the change immediately
     await window.liquidGlassAPI?.toggle(newValue);
   };
-
-  const handleOpenFeedback = useCallback(() => {
-    window.electronAPI?.openExternal('https://t.me/lb_launcher_bot');
-  }, []);
 
   const handleClearCacheOnly = useCallback(async () => {
     await window.api?.clearCacheOnly();
@@ -110,7 +122,7 @@ export const SettingsModal: React.FC = () => {
         <button
           onClick={closeSettingsModal}
           data-gamepad-cancel
-          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-white font-semibold hover:opacity-90 transition-opacity"
+          className="w-full px-6 py-3 rounded-xl bg-gradient-to-r from-color-accent to-color-main text-text-dark font-semibold hover:opacity-90 transition-opacity"
         >
           Закрити
         </button>
@@ -118,8 +130,10 @@ export const SettingsModal: React.FC = () => {
     >
       <div className="space-y-4">
         {/* Feedback link */}
-        <button
-          onClick={handleOpenFeedback}
+        <a
+          href="https://t.me/lbk_launcher_bot"
+          target="_blank"
+          rel="noopener noreferrer"
           className="w-full flex items-center gap-3 p-4 rounded-xl bg-glass border border-border hover:bg-glass-hover hover:border-border-hover transition-all duration-300"
         >
           <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[#0088cc] to-[#00aaff] flex items-center justify-center flex-shrink-0">
@@ -129,7 +143,7 @@ export const SettingsModal: React.FC = () => {
             <h4 className="text-sm font-semibold text-text-main">Зворотний зв'язок</h4>
             <p className="text-xs text-text-muted">Написати нам у Telegram</p>
           </div>
-        </button>
+        </a>
 
         {/* Theme selector */}
         <div className="p-4 rounded-xl bg-glass border border-border">
@@ -139,7 +153,7 @@ export const SettingsModal: React.FC = () => {
               onClick={() => setTheme('light')}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 theme === 'light'
-                  ? 'bg-gradient-to-r from-neon-blue to-neon-purple text-white'
+                  ? 'bg-gradient-to-r from-color-accent to-color-main text-text-dark'
                   : 'bg-glass border border-border text-text-muted hover:text-text-main hover:border-border-hover'
               }`}
             >
@@ -149,7 +163,7 @@ export const SettingsModal: React.FC = () => {
               onClick={() => setTheme('dark')}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 theme === 'dark'
-                  ? 'bg-gradient-to-r from-neon-blue to-neon-purple text-white'
+                  ? 'bg-gradient-to-r from-color-accent to-color-main text-text-dark'
                   : 'bg-glass border border-border text-text-muted hover:text-text-main hover:border-border-hover'
               }`}
             >
@@ -159,7 +173,7 @@ export const SettingsModal: React.FC = () => {
               onClick={() => setTheme('system')}
               className={`flex-1 px-4 py-2 rounded-lg text-sm font-medium transition-all ${
                 theme === 'system'
-                  ? 'bg-gradient-to-r from-neon-blue to-neon-purple text-white'
+                  ? 'bg-gradient-to-r from-color-accent to-color-main text-text-dark'
                   : 'bg-glass border border-border text-text-muted hover:text-text-main hover:border-border-hover'
               }`}
             >
@@ -249,9 +263,7 @@ export const SettingsModal: React.FC = () => {
             <Trash2 size={20} className="text-white" />
           </div>
           <div className="flex-1 text-left">
-            <h4 className="text-sm font-semibold text-text-main">
-              Очистити всі дані
-            </h4>
+            <h4 className="text-sm font-semibold text-text-main">Очистити всі дані</h4>
             <p className="text-xs text-text-muted">
               Видалити налаштування, підписки та всі дані
             </p>
@@ -262,7 +274,7 @@ export const SettingsModal: React.FC = () => {
         {import.meta.env.DEV && (
           <div className="p-4 rounded-xl bg-glass border border-border">
             <div className="flex items-center gap-2 mb-3">
-              <Volume2 size={18} className="text-neon-blue" />
+              <Volume2 size={18} className="text-accent" />
               <h4 className="text-sm font-semibold text-text-main">Тест звуків (Dev)</h4>
             </div>
             <div className="space-y-3">
@@ -270,12 +282,36 @@ export const SettingsModal: React.FC = () => {
                 <p className="text-xs text-text-muted mb-2">Звуки сповіщень:</p>
                 <div className="flex flex-wrap gap-2">
                   {[
-                    { type: 'status-change' as const, label: 'Стан', color: 'from-green-500 to-green-600' },
-                    { type: 'version-update' as const, label: 'Версія', color: 'from-neon-blue to-neon-purple' },
-                    { type: 'app-update' as const, label: 'Застосунок', color: 'from-neon-purple to-pink-500' },
-                    { type: 'progress-change' as const, label: 'Прогрес', color: 'from-amber-500 to-orange-500' },
-                    { type: 'team-new-game' as const, label: 'Нова гра', color: 'from-yellow-500 to-yellow-600' },
-                    { type: 'team-status-change' as const, label: 'Команда', color: 'from-cyan-500 to-cyan-600' },
+                    {
+                      type: 'status-change' as const,
+                      label: 'Стан',
+                      color: 'from-green-500 to-green-600',
+                    },
+                    {
+                      type: 'version-update' as const,
+                      label: 'Версія',
+                      color: 'from-color-accent to-color-main',
+                    },
+                    {
+                      type: 'app-update' as const,
+                      label: 'Застосунок',
+                      color: 'from-color-main to-pink-500',
+                    },
+                    {
+                      type: 'progress-change' as const,
+                      label: 'Прогрес',
+                      color: 'from-amber-500 to-orange-500',
+                    },
+                    {
+                      type: 'team-new-game' as const,
+                      label: 'Нова гра',
+                      color: 'from-yellow-500 to-yellow-600',
+                    },
+                    {
+                      type: 'team-status-change' as const,
+                      label: 'Команда',
+                      color: 'from-cyan-500 to-cyan-600',
+                    },
                   ].map(({ type, label, color }) => (
                     <button
                       key={type}
@@ -344,13 +380,21 @@ export const SettingsModal: React.FC = () => {
         )}
 
         {/* Credits section */}
-        <div className="p-4 rounded-xl border credits-section" style={{ background: 'linear-gradient(to right, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2))', borderColor: 'rgba(236, 72, 153, 0.5)' }}>
+        <div
+          className="p-4 rounded-xl border credits-section"
+          style={{
+            background:
+              'linear-gradient(to right, rgba(236, 72, 153, 0.2), rgba(168, 85, 247, 0.2))',
+            borderColor: 'rgba(236, 72, 153, 0.5)',
+          }}
+        >
           <div className="flex items-center gap-2 mb-3">
             <Heart size={18} className="text-pink-500" />
             <h4 className="text-sm font-semibold text-pink-500">Подяки</h4>
           </div>
           <p className="text-xs text-text-muted mb-3">
-            Особлива подяка перекладачам, які долучились до тестування з перших днів і допомогають робити цей лаунчер таким, яким він є:
+            Особлива подяка перекладачам, які долучились до тестування з перших днів і
+            допомогають робити цей лаунчер таким, яким він є:
           </p>
           <div className="flex flex-wrap gap-2">
             {SPECIAL_TRANSLATORS.map((translator) => (

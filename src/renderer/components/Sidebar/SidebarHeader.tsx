@@ -1,5 +1,5 @@
 import React, { useSyncExternalStore } from 'react';
-import logo from '../../../../resources/icon.png';
+import logo from '../../../../resources/logo.svg';
 import { useSettingsStore } from '../../store/useSettingsStore';
 
 interface SidebarHeaderProps {
@@ -53,20 +53,19 @@ export const SidebarHeader: React.FC<SidebarHeaderProps> = React.memo(
     return (
       <div
         className={`relative flex items-center gap-3 select-none overflow-visible ${
-          isCompact ? '' : 'pb-3 border-b p-4 border-border'
+          isCompact ? '' : 'border-b p-3 pl-4 border-border'
         }`}
       >
         <img
           src={logo}
           alt="LBK logo"
-          className={isCompact ? 'w-8 h-8' : 'w-12 h-12'}
+          className={isCompact ? 'w-8 h-8' : 'w-14 h-14'}
           draggable={false}
         />
         {!isCompact && (
           <>
             <div className="flex-1">
-              <h1 className="text-lg font-head font-bold text-text-main">LB</h1>
-              <p className="text-xs text-text-muted">Українізатори ігор</p>
+              
             </div>
             <button
               onClick={toggleChristmasEffects}

@@ -7,22 +7,22 @@ interface StatusCardProps {
 }
 
 export const StatusCard: React.FC<StatusCardProps> = ({ game }) => (
-    <div className="glass-card">
-      <h3 className="text-lg font-head font-semibold text-text-main mb-4">
-        Прогрес перекладу
-      </h3>
-      <div>
-        <ProgressBar label="Переклад" value={game.translation_progress} color="#00f2ff" />
-        <ProgressBar label="Редактура" value={game.editing_progress} color="#bd00ff" />
-        {game.fonts_progress !== null && game.fonts_progress !== undefined && (
-          <ProgressBar label="Шрифти" value={game.fonts_progress} color="#ff0055" />
-        )}
-        {game.textures_progress !== null && game.textures_progress !== undefined && (
-          <ProgressBar label="Текстури" value={game.textures_progress} color="#10b981" />
-        )}
-        {game.voice_progress !== null && game.voice_progress !== undefined && (
-          <ProgressBar label="Озвучення" value={game.voice_progress} color="#06b6d4" />
-        )}
-      </div>
+  <div className="glass-card">
+    <h3 className="text-lg font-head font-semibold text-text-main mb-4">
+      Прогрес перекладу
+    </h3>
+    <div>
+      <ProgressBar label="Переклад" value={game.translation_progress} color="#A2D2F6" />
+      <ProgressBar label="Редактура" value={game.editing_progress} color="#FFD7A1" />
+      {game.fonts_progress && (
+        <ProgressBar label="Шрифти" value={game.fonts_progress} color="#FDA0B2" />
+      )}
+      {game.textures_progress && (
+        <ProgressBar label="Текстури" value={game.textures_progress} color="#BDFC9F" />
+      )}
+      {game.voice_progress && (
+        <ProgressBar label="Озвучення" value={game.voice_progress} color="#06b6d4" />
+      )}
     </div>
-  );
+  </div>
+);

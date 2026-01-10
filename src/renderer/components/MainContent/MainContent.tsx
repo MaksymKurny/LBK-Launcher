@@ -233,7 +233,7 @@ export const MainContent: React.FC = () => {
           </p>
           <button
             onClick={openSettingsModal}
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-neon-blue to-neon-purple text-white font-semibold hover:opacity-90 transition-opacity"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-color-accent to-color-main text-text-dark font-semibold hover:opacity-90 transition-opacity"
           >
             <Settings size={20} />
             Відкрити налаштування
@@ -331,7 +331,7 @@ export const MainContent: React.FC = () => {
               />
             )}
             {selectedGame.support_url && (
-              <Button variant="pink" icon={<Heart size={20} />} onClick={handleSupport} data-gamepad-action>
+              <Button variant="accent" icon={<Heart size={20} />} onClick={handleSupport} data-gamepad-action>
                 Підтримати переклад
               </Button>
             )}
@@ -386,8 +386,8 @@ export const MainContent: React.FC = () => {
           <div className="glass-card mb-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isSpecialTranslator(selectedGame.team) ? 'bg-yellow-500/20' : 'bg-neon-blue/20'}`}>
-                  <Users size={20} className={isSpecialTranslator(selectedGame.team) ? 'text-yellow-400' : 'text-neon-blue'} />
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${isSpecialTranslator(selectedGame.team) ? 'bg-yellow-500/20' : 'bg-accent/20'}`}>
+                  <Users size={20} className={isSpecialTranslator(selectedGame.team) ? 'text-yellow-400' : 'text-accent'} />
                 </div>
                 <div>
                   <div className="text-xs text-text-muted">
