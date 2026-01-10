@@ -5,6 +5,7 @@ import type { Game } from '../../types/game';
 import { useStore } from '../../store/useStore';
 import { useGamepadModeStore } from '../../store/useGamepadModeStore';
 import { getGameImageUrl } from '../../utils/imageUrl';
+import { StatusBadge } from '../Elements/StatusBadge';
 
 interface TranslationPickerModalProps {
   isOpen: boolean;
@@ -93,9 +94,10 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                     className={`
                       w-full p-3 rounded-xl mb-1 last:mb-0 text-left transition-all
                       flex items-center gap-3 group
-                      ${isSelected
-                        ? 'bg-accent/20 ring-1 ring-accent'
-                        : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-accent/50'
+                      ${
+                        isSelected
+                          ? 'bg-accent/20 ring-1 ring-accent'
+                          : 'hover:bg-glass-hover focus:bg-glass-hover focus:ring-1 focus:ring-accent/50'
                       }
                     `}
                   >
@@ -108,11 +110,15 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                           className="w-full h-full object-cover"
                           onError={(e) => {
                             e.currentTarget.style.display = 'none';
-                            e.currentTarget.nextElementSibling?.classList.remove('hidden');
+                            e.currentTarget.nextElementSibling?.classList.remove(
+                              'hidden'
+                            );
                           }}
                         />
                       ) : null}
-                      <div className={`absolute inset-0 flex items-center justify-center ${logoUrl ? 'hidden' : ''}`}>
+                      <div
+                        className={`absolute inset-0 flex items-center justify-center ${logoUrl ? 'hidden' : ''}`}
+                      >
                         <Users size={20} className="text-text-muted" />
                       </div>
                     </div>
@@ -135,21 +141,13 @@ export const TranslationPickerModal: React.FC<TranslationPickerModalProps> = ({
                         )}
                       </div>
                       <div className="flex items-center gap-3 mt-1 text-xs text-text-muted">
-                        <span className={progress >= 100 ? 'text-green-400' : 'text-accent'}>
+                        <span
+                          className={progress >= 100 ? 'text-green-400' : 'text-accent'}
+                        >
                           {progress}%
                         </span>
                         {game.version && <span>v{game.version}</span>}
-                        {game.status && (
-                          <span className={
-                            game.status === 'completed' ? 'text-green-400' :
-                            game.status === 'in-progress' ? 'text-accent' :
-                            ''
-                          }>
-                            {game.status === 'completed' ? 'Завершено' :
-                             game.status === 'in-progress' ? 'Ранній доступ' :
-                             game.status === 'planned' ? 'Заплановано' : game.status}
-                          </span>
-                        )}
+                        {game.status && <StatusBadge status={game.status} />}
                       </div>
                     </div>
 

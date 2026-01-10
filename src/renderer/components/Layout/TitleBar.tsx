@@ -37,7 +37,7 @@ export const TitleBar: React.FC<TitleBarProps> = ({ online, version }) => {
       } transition-colors`}
     >
       {/* Hide LBK text on macOS 26+ to avoid overlap with native traffic lights */}
-      {!isMacOS26Plus && <div className="text-xs text-text-muted font-medium">LB</div>}
+      {!isMacOS26Plus && <div className="text-xs text-text-muted font-medium">LBK</div>}
       {isMacOS26Plus && <div />}
 
       <div className="text-[10px] text-text-muted/70 absolute left-1/2 -translate-x-1/2">

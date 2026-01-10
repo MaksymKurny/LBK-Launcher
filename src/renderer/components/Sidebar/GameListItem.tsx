@@ -5,6 +5,7 @@ import { getGameImageUrl } from '../../utils/imageUrl';
 import { Loader } from '../ui/Loader';
 import { useSettingsStore } from '../../store/useSettingsStore';
 import { useImagePreload } from '../../hooks/useImagePreload';
+import { StatusBadge } from '../Elements/StatusBadge';
 
 interface GameListItemProps {
   game: Game;
@@ -14,10 +15,22 @@ interface GameListItemProps {
   isGameDetected?: boolean;
   showTeamName?: boolean;
   isHorizontalMode?: boolean;
+  isCardStyle?: boolean;
+  showDownloadCounter?: boolean;
 }
 
 export const GameListItem: React.FC<GameListItemProps> = React.memo(
-  ({ game, isSelected, onClick, hasUpdate = false, isGameDetected = false, showTeamName = false, isHorizontalMode = false }) => {
+  ({
+    game,
+    isSelected,
+    onClick,
+    hasUpdate = false,
+    isGameDetected = false,
+    showTeamName = false,
+    isHorizontalMode = false,
+    isCardStyle = false,
+    showDownloadCounter = false,
+  }) => {
     const [imageLoading, setImageLoading] = useState(true);
     const [imageError, setImageError] = useState(false);
     const showAdultGames = useSettingsStore((state) => state.showAdultGames);
@@ -42,6 +55,103 @@ export const GameListItem: React.FC<GameListItemProps> = React.memo(
         onClick();
       }
     };
+
+    // Card style rendering
+    if (isCardStyle) {
+      return (
+        <div
+          ref={preloadRef}
+          role="button"
+          tabIndex={0}
+          onClick={onClick}
+          onKeyDown={handleKeyDown}
+          data-game-card
+          className={`glass-card !p-0 flex flex-col items-center`}
+        >
+          <div className="relative h-64 w-full bg-glass rounded-t-xl overflow-hidden">
+            {thumbnailUrl && !imageError ? (
+              <>
+                {imageLoading && (
+                  <div className="absolute inset-0 flex items-center justify-center bg-glass">
+                    <Loader size="sm" />
+                  </div>
+                )}
+                <img
+                  src={thumbnailUrl}
+                  alt={game.name}
+                  draggable={false}
+                  className={`w-full h-full object-cover transition-opacity duration-300 ${
+                    imageLoading ? 'opacity-0' : 'opacity-100'
+                  } ${isAdultBlurred ? 'blur-lg' : ''}`}
+                  onLoad={() => setImageLoading(false)}
+                  onError={() => {
+                    setImageError(true);
+                    setImageLoading(false);
+                  }}
+                />
+              </>
+            ) : (
+              <div
+                className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-2xl ${isAdultBlurred ? 'blur-lg' : ''}`}
+              >
+                {game.name.charAt(0)}
+              </div>
+            )}
+
+            {/* Adult content indicator */}
+            {isAdultBlurred && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <EyeOff size={20} className="text-white/80" />
+              </div>
+            )}
+
+            {/* Indicators */}
+            {hasUpdate && (
+              <div className="absolute top-2 right-2 w-3 h-3 bg-accent rounded-full animate-pulse" />
+            )}
+            {isGameDetected && (
+              <div
+                className="absolute bottom-2 right-2 w-3 h-3 bg-green-500 rounded-full"
+                title="Гра встановлена"
+              />
+            )}
+          </div>
+          <div className="flex-grow p-4 gap-2 flex flex-col w-full">
+            <h3 className="text-lg font-head font-semibold text-text-main">
+              {game.name}
+            </h3>
+            {showDownloadCounter && (
+              <p className="text-xs text-text-muted mb-2">
+                Встановлень: {game.downloads}
+              </p>
+            )}
+            {/* Info */}
+            <div className="p-3 bg-glass-hover rounded-xl">
+              <h4 className="font-medium text-sm text-text-main mb-2 truncate">
+                {game.team}
+              </h4>
+
+              <div className="flex gap-3 items-center w-full">
+                {game.status && (
+                  <StatusBadge status={game.status} className="flex-shrink-0" />
+                )}
+                {game.status !== 'planned' && (
+                  <>
+                    <div className="h-1 bg-white/10 rounded-full overflow-hidden flex-grow">
+                      <div
+                        className="h-full bg-gradient-to-r from-color-accent to-color-main rounded-full transition-all duration-500"
+                        style={{ width: `${averageProgress}%` }}
+                      />
+                    </div>
+                    <span>{`${averageProgress}%`}</span>
+                  </>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
 
     // Horizontal compact mode for gamepad
     if (isHorizontalMode) {
@@ -83,7 +193,9 @@ export const GameListItem: React.FC<GameListItemProps> = React.memo(
                 />
               </>
             ) : (
-              <div className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-2xl ${isAdultBlurred ? 'blur-lg' : ''}`}>
+              <div
+                className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-2xl ${isAdultBlurred ? 'blur-lg' : ''}`}
+              >
                 {game.name.charAt(0)}
               </div>
             )}
@@ -162,7 +274,9 @@ export const GameListItem: React.FC<GameListItemProps> = React.memo(
                 />
               </>
             ) : (
-              <div className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-sm ${isAdultBlurred ? 'blur-md' : ''}`}>
+              <div
+                className={`w-full h-full bg-gradient-to-br from-color-main to-color-accent flex items-center justify-center text-text-dark font-bold text-sm ${isAdultBlurred ? 'blur-md' : ''}`}
+              >
                 {game.name.charAt(0)}
               </div>
             )}

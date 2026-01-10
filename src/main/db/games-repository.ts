@@ -151,7 +151,7 @@ export class GamesRepository {
 
     if (searchQuery) {
       whereConditions.push('name LIKE ?');
-      queryParams.push(`%${searchQuery}%`);
+      queryParams.push(`%${searchQuery.trim()}%`);
     }
 
     // Adult games are always returned, UI will show blur overlay when setting is off
