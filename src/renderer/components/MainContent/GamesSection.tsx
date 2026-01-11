@@ -7,14 +7,12 @@ import { useStore } from '@/renderer/store/useStore';
 interface GamesSectionProps {
   title: string;
   showLimit?: number;
-  columns?: number;
   showDownloadCounter?: boolean;
 }
 
 export const GamesSection: React.FC<GamesSectionProps> = ({
   title,
   showLimit = 3,
-  columns = 3,
   showDownloadCounter = false,
 }) => {
   const { setSelectedGame } = useStore();
@@ -28,7 +26,7 @@ export const GamesSection: React.FC<GamesSectionProps> = ({
   return (
     <div className="text-left w-full max-w-[1317px]">
       <h2 className="text-4xl font-head font-semibold text-text-main mb-8">{title}</h2>
-      <div className={`grid grid-cols-${columns} gap-8`}>
+      <div className={`grid grid-cols-3 gap-8`}>
         {isLoading ? (
           <p>Завантаження... </p>
         ) : visibleGames.length === 0 && !isLoading ? (

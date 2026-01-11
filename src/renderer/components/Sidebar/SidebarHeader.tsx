@@ -20,6 +20,7 @@ const getSystemDarkMode = () => window.matchMedia('(prefers-color-scheme: dark)'
 export const SidebarHeader: React.FC<SidebarHeaderProps> = React.memo(
   ({ isCompact = false }) => {
     const { setSelectedGame } = useStore();
+    const { theme } = useSettingsStore();
     const systemDarkMode = useSyncExternalStore(
       subscribeToMediaQuery,
       getSystemDarkMode,
